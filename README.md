@@ -17,6 +17,9 @@ npm i --save mongodb
 //Instalar o mongoose - Mongoose traduz os dados do banco de dados pra pbjetos javaScript para que possam ser utulizados por sua aplicação.
 npm i --save mongoose
 
+//Instalar o cors - faz o filtro de quais sites ou metodos podem usar API
+npm i cors --save
+
 Como rodar o servidor
 
 //com o nodemon 

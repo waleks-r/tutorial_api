@@ -1,6 +1,8 @@
 //Importar biblioteca e instânciar
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const res = require('express/lib/response');
 
 require("./models/Artigo"); //Importando models
 const Artigo = mongoose.model('artigo');
@@ -9,6 +11,12 @@ const app = express();
 
 //Permissões 
 app.use(express.json()); //usar no formato json
+res.header("Access-control-Allow-Origin", "*"); //Site que pode fazer acesso o "*" quer dizer que todos podem fazer a requisição
+res.header("Access-control-Allow-Methods", "POST, PUT, GET, DELETE"); //Quais são os metodos que podem ser usados
+app.use((req, res, nex) =>{
+    app.use(cors());
+    next();
+})
 
 //Conexão com o banco de dados
 mongoose.connect('mongodb://localhost/waleks',{
