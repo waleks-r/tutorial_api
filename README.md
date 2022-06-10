@@ -11,6 +11,12 @@ npm i -D nodemon
 npm i gitignore -g
 gitignore node
 
+//Instalar o moongoDB 
+npm i --save mongodb 
+
+//Instalar o mongoose - Mongoose traduz os dados do banco de dados pra pbjetos javaScript para que possam ser utulizados por sua aplicação.
+npm i --save mongoose
+
 Como rodar o servidor
 
 //com o nodemon 
@@ -21,6 +27,9 @@ node app.js
 
 //Usar API
 http://localhost:8080/
+
+//Como utilizar repositorio baixado do github
+abra a pasta raiz do sistema e no termimanal utilize o comando npm i
 
 Programação 
 
