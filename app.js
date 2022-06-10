@@ -2,6 +2,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+require("./models/Artigo"); //Importando models
+const Artigo = mongoose.model('artigo');
+
 const app = express();
 
 //Permissões 
@@ -19,7 +22,64 @@ mongoose.connect('mongodb://localhost/waleks',{
 
 //Rotas
 app.get('/', (req, res) => {
-    return res.json({titulo: "Como criar API"})
+    Artigo.find({}).then((artigo) => {
+        return res.json(artigo);
+    }).catch((erro) => {
+        return res.status(400).json({
+            error: true,
+            message: "Nenhum artigo encontrado!"
+        });
+    });
+});
+
+app.get('/artigo/:id', (req, res) => {
+    Artigo.findOne({_id: req.params.id}).then((artigo) =>{
+        return res.json(artigo)
+    }).catch((erro) => {
+            return res.status(400).json({
+                error: true,
+                message: "Nenhum artigo encontrado!"
+        });
+            });
+});
+
+app.put('/artigo/:id', (req, res) => {
+    const artigo = Artigo.updateOne({_id: req.params.id}, req.body, (err) => {
+        if(err) return res.status(400).json({
+            error: true,
+            message: "Error: Artigo não foi editado com sucesso!"
+        });
+        return res.json({
+            error: false,
+            message:"Artigo editado com sucesso!"
+        });
+    });
+});
+
+app.post("/artigo", (req, res) =>{
+    const artigo = Artigo.create(req.body, (erro) => {
+        if(erro) return res.status(400).json({ //Caso dê algum erro 
+            error: true,
+            message: "Error: Artigo não foi cadastrado com sucesso!"
+        });
+        return res.json({ //Caso não dê erro 
+            error: false,
+            message: "Artigo foi cadastrado com sucesso!"
+    });
+})
+});
+
+app.delete("/artigo/:id", (req, res) => {
+    const artigo = Artigo.deleteOne({_id: req.params.id}, req.body, (err) =>{
+        if(err) return res.status(400).json({
+            error: true,
+            message: "Error: Artigo não foi apagado com sucesso!"
+        })
+        return res.json({
+            error: false,
+            message: "Artigo foi apagado com sucesso!"
+        });
+    });
 });
 
 //Rodar o servidor
